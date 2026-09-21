@@ -1,0 +1,44 @@
+# KitoLoaders
+
+Custom, themeable loading indicators for SwiftUI: spinner, dots, pulse,
+determinate progress ring, and skeleton placeholders — all reading colors
+from `KitoCore`'s `kitoTheme` so they match the rest of the ecosystem for free.
+
+## Install
+
+```swift
+.package(url: "https://github.com/WykSofts-Inc/KitoLoaders.git", from: "1.0.0"),
+```
+
+## Use
+
+```swift
+import KitoLoaders
+
+KitoSpinner()
+KitoDotsLoader()
+KitoPulseLoader()
+KitoProgressRing(fraction: 0.6)
+
+// Skeleton placeholder for a specific view
+Text(article.title)
+    .kitoSkeleton(isLoading: viewModel.state.isLoading)
+
+// Style-driven (pick the kind via configuration, e.g. from a screen parameter)
+KitoLoaderView(style: KitoLoaderStyle(kind: .dots, size: 30))
+```
+
+Every loader accepts an optional `color:` override; omit it to use
+`@Environment(\.kitoTheme).colors.primary`.
+
+## Why a style enum (`KitoLoaderStyle`) at all
+
+`KitoScreens` and other consumers often want "whichever loader the app
+chose" as a single configuration value threaded through several screens,
+rather than picking a concrete `KitoSpinner` vs `KitoDotsLoader` type at each
+call site. `KitoLoaderStyle` (in KitoCore) + `KitoLoaderView` (here) is that
+indirection — set it once, every screen using `KitoLoaderView` follows.
+
+## License
+
+MIT
