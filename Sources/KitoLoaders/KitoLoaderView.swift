@@ -35,6 +35,16 @@ public struct KitoLoaderView: View {
         case .skeleton:
             KitoSkeleton()
                 .frame(width: style.size * 3, height: style.size)
+        case .bars:
+            KitoBarsLoader(barWidth: style.size / 6, maxHeight: style.size, color: color)
+        case .wave:
+            KitoWaveLoader(dotSize: style.size / 3, color: color)
+        case .ripple:
+            KitoRippleLoader(size: style.size, color: color)
+        case .orbit:
+            KitoOrbitLoader(size: style.size, color: color)
+        case .gradientRing:
+            KitoGradientRingLoader(size: style.size, lineWidth: style.lineWidth, colors: color.map { [$0.opacity(0), $0] })
         }
     }
 }
