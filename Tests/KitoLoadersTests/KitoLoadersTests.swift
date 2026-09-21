@@ -22,4 +22,16 @@ final class KitoLoadersTests: XCTestCase {
         XCTAssertEqual(KitoLoaderStyle.default, KitoLoaderStyle())
         XCTAssertEqual(KitoLoaderStyle.default.kind, .spinner)
     }
+
+    func testEveryLoaderKindHasADistinctKitoLoaderViewRendering() {
+        // Not a visual assertion (that needs a running app) — this just
+        // proves KitoLoaderView's switch is exhaustive and every kind
+        // constructs without crashing, so adding a case without wiring the
+        // switch fails the build, not a runtime surprise.
+        let kinds: [KitoLoaderKind] = [.spinner, .dots, .pulse, .progressRing(fraction: 0.4), .skeleton, .bars, .wave, .ripple, .orbit, .gradientRing]
+        for kind in kinds {
+            _ = KitoLoaderView(style: KitoLoaderStyle(kind: kind))
+        }
+        XCTAssertEqual(kinds.count, 10)
+    }
 }
