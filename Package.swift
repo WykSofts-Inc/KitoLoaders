@@ -17,7 +17,7 @@ let package = Package(
         .library(name: "KitoLoaders", targets: ["KitoLoaders"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/WykSofts-Inc/KitoCore.git", from: "1.0.0"),
+        .package(url: "https://github.com/WykSofts-Inc/KitoCore.git", from: "1.1.0"),
     ],
     targets: [
         .target(
