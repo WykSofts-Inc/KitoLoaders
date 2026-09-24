@@ -43,7 +43,7 @@ public struct KitoLinearProgress: View {
                     }
                     Spacer(minLength: 8)
                     if showsPercentage, let fraction {
-                        Text("\(Int((fraction * 100).rounded()))%")
+                        Text(fraction, format: .percent.precision(.fractionLength(0)).rounded(rule: .toNearestOrAwayFromZero))
                             .font(theme.typography.label.monospacedDigit())
                             .foregroundStyle(theme.colors.onBackground.opacity(0.7))
                             .contentTransition(.numericText(value: fraction))

@@ -73,6 +73,13 @@ KitoRefreshableScrollView(onRefresh: { await viewModel.reload() }) {
 Every loader accepts an optional `color:` override; omit it to use
 `@Environment(\.kitoTheme).colors.primary`.
 
+## Right-to-left
+
+Bars, rings, skeletons and the shimmer mirror with the layout direction: linear progress fills
+and the indeterminate segments run from the leading edge, and the shimmer sweeps leading to
+trailing. Percentage labels are formatted with the environment locale. The heartbeat trace is
+drawn left to right in every language, like a real monitor. Nothing to configure.
+
 ## Why a style enum (`KitoLoaderStyle`) at all
 
 `KitoScreens` and other consumers often want "whichever loader the app
