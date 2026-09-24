@@ -1,5 +1,7 @@
 # KitoLoaders
 
+**[Documentation](https://wyksofts-inc.github.io/KitoLoaders/documentation/kitoloaders/)**
+
 Custom, themeable loading indicators for SwiftUI: spinner, dots, pulse,
 determinate progress ring, and skeleton placeholders — all reading colors
 from `KitoCore`'s `kitoTheme` so they match the rest of the ecosystem for free.
