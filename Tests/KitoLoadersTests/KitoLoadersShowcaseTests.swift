@@ -95,6 +95,13 @@ final class KitoLoadersShowcaseTests: XCTestCase {
         XCTAssertEqual(KitoRefreshMath.progress(offset: -20, threshold: 80), 0)
     }
 
+    func testPullIsMeasuredFromTheRestingOffset() {
+        // Full screen, the content rests below the safe area, not at zero.
+        XCTAssertEqual(KitoRefreshMath.pull(offset: 59, rest: 59), 0)
+        XCTAssertEqual(KitoRefreshMath.pull(offset: 139, rest: 59), 80)
+        XCTAssertEqual(KitoRefreshMath.pull(offset: 20, rest: 59), 0)
+    }
+
     func testTypingDotsHopInTurn() {
         XCTAssertGreaterThan(KitoTypingIndicator.lift(at: 0.2, index: 0), 0.5)
         XCTAssertEqual(KitoTypingIndicator.lift(at: 0.2, index: 2), 0)
