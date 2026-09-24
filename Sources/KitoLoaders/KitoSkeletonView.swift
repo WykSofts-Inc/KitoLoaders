@@ -151,7 +151,7 @@ public struct KitoSkeletonView: View {
         let fromMe = row % 2 == 1
         let width = 0.45 + KitoSkeletonTemplate.lineFraction(row: row, line: 3) * 0.35
         return HStack(alignment: .bottom, spacing: 8) {
-            if fromMe { Spacer(minLength: 0) } else { Circle().fill(fill).frame(width: 28, height: 28) }
+            if !fromMe { Circle().fill(fill).frame(width: 28, height: 28) }
             GeometryReader { geometry in
                 UnevenRoundedRectangle(topLeadingRadius: 18, bottomLeadingRadius: fromMe ? 18 : 4,
                                        bottomTrailingRadius: fromMe ? 4 : 18, topTrailingRadius: 18, style: .continuous)
@@ -160,7 +160,6 @@ public struct KitoSkeletonView: View {
                     .frame(maxWidth: .infinity, alignment: fromMe ? .trailing : .leading)
             }
             .frame(height: row % 3 == 0 ? 56 : 38)
-            if !fromMe { Spacer(minLength: 0) }
         }
     }
 

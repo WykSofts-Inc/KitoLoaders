@@ -70,6 +70,8 @@ public struct KitoRefreshableScrollView<Content: View>: View {
     @State private var pull: CGFloat = 0
     @State private var isRefreshing = false
     @State private var isArmed = true
+    /// The offset at rest (the top safe-area inset, full screen), measured on first layout.
+    @State private var rest: CGFloat?
     private let space = "KitoRefreshableScrollView"
 
     public init(threshold: CGFloat = 80, color: Color? = nil, onRefresh: @escaping () async -> Void, @ViewBuilder content: () -> Content) {
@@ -93,11 +95,12 @@ public struct KitoRefreshableScrollView<Content: View>: View {
         .coordinateSpace(name: space)
         .overlay(alignment: .top) {
             KitoRefreshIndicator(pullProgress: KitoRefreshMath.progress(offset: pull, threshold: threshold), isRefreshing: isRefreshing, color: color)
-                .offset(y: isRefreshing ? 12 : KitoRefreshMath.indicatorOffset(offset: pull))
+                .offset(y: (rest ?? 0) + (isRefreshing ? 12 : KitoRefreshMath.indicatorOffset(offset: pull)))
                 .allowsHitTesting(false)
         }
         .onPreferenceChange(KitoRefreshOffsetKey.self) { offset in
-            pull = max(offset, 0)
+            if rest == nil { rest = offset }
+            pull = KitoRefreshMath.pull(offset: offset, rest: rest ?? 0)
             if pull < 4 { isArmed = true }
             guard isArmed, !isRefreshing, pull >= threshold else { return }
             isArmed = false
@@ -120,6 +123,11 @@ struct KitoRefreshOffsetKey: PreferenceKey {
 }
 
 enum KitoRefreshMath {
+    /// How far past its resting position the content has been pulled down.
+    static func pull(offset: CGFloat, rest: CGFloat) -> CGFloat {
+        max(offset - rest, 0)
+    }
+
     /// 0...1: how far the pull is towards triggering.
     static func progress(offset: CGFloat, threshold: CGFloat) -> Double {
         guard threshold > 0 else { return 1 }
