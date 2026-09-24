@@ -44,7 +44,7 @@ public struct KitoProgressRing: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.easeOut(duration: 0.3), value: fraction)
             if showsPercentage {
-                Text("\(Int(fraction * 100))%")
+                Text(fraction, format: .percent.precision(.fractionLength(0)).rounded(rule: .down))
                     .font(theme.typography.caption)
                     .foregroundStyle(theme.colors.onBackground)
             }
